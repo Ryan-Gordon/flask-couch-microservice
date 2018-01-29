@@ -12,11 +12,39 @@ basePath: /v1.0
 schemes:
  - http
 paths:
-  /products/getproduct:
+  /products/createProduct:
+    post:
+      tags:
+      - admins
+      operationId: api.products.create_product
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: productPayload
+        description: Inventory product to add
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        201:
+          description: Successfully added product to the DB
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /products/{prod_id}:
       get:
         tags:
         - public
         operationId: api.products.read_product
+        parameters:
+          - in: path
+            name: prod_id
+            type: string
+            required: true
+            description: Numeric ID of the user to get.
         responses:
           '200':
             description: 'Fetch a product from the database'

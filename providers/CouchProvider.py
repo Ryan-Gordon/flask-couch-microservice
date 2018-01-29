@@ -1,13 +1,15 @@
 import requests
 import couchdb
+import os
 
 ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = 'pass'
-COUCHDB_URL = 'http://'+ADMIN_USERNAME+':'+ADMIN_PASSWORD+'@localhost:5984/'
-couch = couchdb.Server(COUCHDB_URL)
+COUCHDB_URL = 'http://'+ADMIN_USERNAME+':'+ADMIN_PASSWORD+'@127.0.0.1:5984/'
 
+couch = couchdb.Server(COUCHDB_URL)
 class CouchProvider(object):
     def create_product(self,payload):
+        
         db = couch['products']
         if payload['_id'] in db:
             return {"error":"Found product with existing ID"}, 409

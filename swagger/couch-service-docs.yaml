@@ -11,11 +11,16 @@ basePath: /v1.0
 
 schemes:
  - http
+securityDefinitions:
+  basicAuth:
+    type: basic
 paths:
   /products/createProduct:
     post:
       tags:
       - admins
+      security:
+        - basicAuth: []
       operationId: api.products.create_product
       consumes:
       - application/json
@@ -27,6 +32,29 @@ paths:
         description: Inventory product to add
         schema:
           $ref: '#/definitions/Product'
+      responses:
+        201:
+          description: Successfully added product to the DB
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+  /products/updateProduct:
+    put:
+      tags:
+      - admins
+      operationId: api.products.update_product
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: productPayload
+        description: Inventory item to add
+        schema:
+          $ref: '#/definitions/Product'
+          
       responses:
         201:
           description: Successfully added product to the DB
@@ -50,6 +78,30 @@ paths:
             description: 'Fetch a product from the database'
             schema:
                 $ref: '#/definitions/Product'
+      delete:
+        tags:
+        - admins
+        security:
+        - basicAuth: []
+        parameters:
+          - in: path
+            name: prod_id
+            type: string
+            required: true
+            description: Numeric ID of the user to get.    
+        operationId: api.products.delete_product
+        responses:
+          200:
+            description: Successfully deleted product 
+          400:
+            description: invalid input, object invalid
+          409:
+            description: conflict error
+          401:
+            description: Not correctly authorized 
+      
+
+
 # tags are used for organizing operations
 tags:
 - name: public

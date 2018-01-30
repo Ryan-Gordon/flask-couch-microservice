@@ -6,4 +6,4 @@ ADD . /code/
 RUN pip install -r requirements.txt
 
 EXPOSE 2020
-CMD ["python3", "/code/app.py"]
+CMD ["python3",  "/code/app.py"]

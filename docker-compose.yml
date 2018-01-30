@@ -1,16 +1,13 @@
 version: "2"
 
 services:
-  
   flask-api:
     restart: always
     image: flask-api-microservice
     build: .
     environment:
       - MODE=dev
-      - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=supersecret1
-      - DB_URL='http://admin:supersecret1@localhost:5984/'
+      - SERVER_URL='http://admin:pass@db.scanitive.ryan-gordon.me:5984'
     volumes:
       - .:/code
    

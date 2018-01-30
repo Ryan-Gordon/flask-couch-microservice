@@ -3,5 +3,6 @@ connexion
 Flask-Injector
 fastavro
 injector==0.12.0
-couchdb
+CouchDB==1.1
 flask_cors
+bcrypt
